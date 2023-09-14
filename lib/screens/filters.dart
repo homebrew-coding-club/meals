@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:meals/screens/main_drawer.dart';
+// import 'package:meals/screens/tabs.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({super.key});
@@ -12,7 +14,6 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
   var _glutenFreeFilterSet = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +22,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
           'Your Filters',
         ),
       ),
+      // drawer: MainDrawer(
+      //   onSelectScreen: (identifier) {
+      //     Navigator.of(context).pop();
+      //     if (identifier == 'meals') {
+      //       Navigator.of(context).pushReplacement(
+      //         MaterialPageRoute(
+      //           builder: (ctx) => const TabsScreen(),
+      //         ),
+      //       );
+      //     }
+      //   },
+      // ),
       body: Column(
         children: [
           SwitchListTile(
@@ -39,11 +52,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
             subtitle: Text(
               'Only include gluten free',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
             ),
             activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(left: 32, right: 22,),
+            contentPadding: const EdgeInsets.only(
+              left: 32,
+              right: 22,
+            ),
           ),
         ],
       ),
