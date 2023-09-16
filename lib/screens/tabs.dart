@@ -27,13 +27,13 @@ class _TabsScreenState extends State<TabsScreen> {
   final List<Meal> _favoriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
-  void showInfoMassage(String message) {
+  void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        message,
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
-    ));
+    );
   }
 
   void _toggleMealFavoriteStatus(Meal meal) {
@@ -42,12 +42,12 @@ class _TabsScreenState extends State<TabsScreen> {
     if (isExisting) {
       setState(() {
         _favoriteMeals.remove(meal);
-        showInfoMassage('Meal is no longer favorite');
       });
+      _showInfoMessage('Meal is no longer a favorite.');
     } else {
       setState(() {
         _favoriteMeals.add(meal);
-        showInfoMassage('Mark as a favorite!');
+        _showInfoMessage('Marked as a favorite!');
       });
     }
   }
@@ -63,13 +63,15 @@ class _TabsScreenState extends State<TabsScreen> {
     if (identifier == 'filters') {
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) =>  FiltersScreen(
-            currentFilter: _selectedFilters,
+          builder: (ctx) => FiltersScreen(
+            currentFilters: _selectedFilters,
           ),
         ),
       );
 
-      _selectedFilters = result ?? kInitialFilters;
+      setState(() {
+        _selectedFilters = result ?? kInitialFilters;
+      });
     }
   }
 
@@ -88,7 +90,7 @@ class _TabsScreenState extends State<TabsScreen> {
       if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
         return false;
       }
-      return false;
+      return true;
     }).toList();
 
     Widget activePage = CategoriesScreen(
